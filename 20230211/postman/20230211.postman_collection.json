@@ -1,0 +1,121 @@
+{
+	"info": {
+		"_postman_id": "3f3fec9d-3cd2-4008-8d64-d8c85ce78c83",
+		"name": "20230211",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "4192349"
+	},
+	"item": [
+		{
+			"name": "WeatherApi.com",
+			"item": [
+				{
+					"name": "Astronomy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WeatherApiUrl}}/{{WeatherApiVersion}}/astronomy.json?key={{apiKey}}&q={{location}}&dt={{date}}",
+							"host": [
+								"{{WeatherApiUrl}}"
+							],
+							"path": [
+								"{{WeatherApiVersion}}",
+								"astronomy.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{apiKey}}"
+								},
+								{
+									"key": "q",
+									"value": "{{location}}"
+								},
+								{
+									"key": "dt",
+									"value": "{{date}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Current",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{WeatherApiUrl}}/{{WeatherApiVersion}}/current.json?key={{apiKey}}&q={{location}}&aqi=no",
+							"host": [
+								"{{WeatherApiUrl}}"
+							],
+							"path": [
+								"{{WeatherApiVersion}}",
+								"current.json"
+							],
+							"query": [
+								{
+									"key": "key",
+									"value": "{{apiKey}}"
+								},
+								{
+									"key": "q",
+									"value": "{{location}}"
+								},
+								{
+									"key": "aqi",
+									"value": "no"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "WeatherApiUrl",
+			"value": "http://api.weatherapi.com"
+		},
+		{
+			"key": "WeatherApiVersion",
+			"value": "v1"
+		},
+		{
+			"key": "apiKey",
+			"value": "<apiKey>"
+		},
+		{
+			"key": "location",
+			"value": "93955"
+		},
+		{
+			"key": "date",
+			"value": "2023-02-11"
+		}
+	]
+}
