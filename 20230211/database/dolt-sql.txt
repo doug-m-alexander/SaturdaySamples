@@ -1,0 +1,3 @@
+dolt sql-client
+create database weather_api;
+use weather_api;

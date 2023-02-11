@@ -1,0 +1,6 @@
+dolt config --global --add user.email "you@example.com" 
+dolt config --global --add user.name "Your Name"        
+dolt init
+dolt branch feature/init-tables
+dolt checkout feature/init-tables
+dolt table import -c -s current_schema.sql generic current_response.json
