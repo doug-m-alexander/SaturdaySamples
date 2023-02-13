@@ -1,7 +1,4 @@
 ﻿@page "/fetchdata"
-@using BlazorApp1.Shared
-@using System.Text;
-@using Microsoft.AspNetCore.Http;
 @inject HttpClient Http
 
 <PageTitle>Weather forecast</PageTitle>
@@ -10,16 +7,7 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-<EditForm Model="@apiQuery" OnSubmit="@HandleSubmit">
-    <InputText id="location" @bind-Value="apiQuery.location" />
-    <InputCheckbox id="aqi" @bind-Value="apiQuery.aqi" />
-
-    <button type="submit">Submit</button>
-</EditForm>
-
-
-
-@*@if (forecasts == null)
+@if (forecasts == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -46,15 +34,24 @@ else
             }
         </tbody>
     </table>
-}*@
+}
 
 @code {
-    private CurrentApiQuery apiQuery = new();
-    private WeatherApiCurrentDto currentDto;
-    private async void HandleSubmit()
+    private WeatherForecast[]? forecasts;
+
+    protected override async Task OnInitializedAsync()
     {
-        var endpoint = $"WeatherForecast/current?q={apiQuery.location}&aqi={(apiQuery.aqi ? "yes" : "no")}";
-        var response = await Http.GetFromJsonAsync<WeatherApiCurrentDto>(endpoint);
-        currentDto = response;
+        forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("sample-data/weather.json");
+    }
+
+    public class WeatherForecast
+    {
+        public DateTime Date { get; set; }
+
+        public int TemperatureC { get; set; }
+
+        public string? Summary { get; set; }
+
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
     }
 }

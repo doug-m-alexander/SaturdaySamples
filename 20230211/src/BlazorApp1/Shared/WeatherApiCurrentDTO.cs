@@ -6,61 +6,55 @@ using System.Threading.Tasks;
 
 namespace BlazorApp1.Shared
 {
-    public class WeatherApiCurrentDTO
+    public class Condition
     {
-        public struct WeatherApiLocation
-        {
-            public string? name;
-            public string? region;
-            public string? country;
-            public double? lat;
-            public double? lon;
-            public string? tz_id;
-            public int? localtime_epoch;
-            public string? localtime;
-        }
+        public string text { get; set; }
+        public string icon { get; set; }
+        public int code { get; set; }
+    }
 
-        public struct WeatherApiCurrentCondition
-        {
-            public string? text;
-            public string? icon;
-            public int? code;
-        }
+    public class Current
+    {
+        public int last_updated_epoch { get; set; }
+        public string last_updated { get; set; }
+        public double temp_c { get; set; }
+        public double temp_f { get; set; }
+        public int is_day { get; set; }
+        public Condition condition { get; set; }
+        public double wind_mph { get; set; }
+        public double wind_kph { get; set; }
+        public int wind_degree { get; set; }
+        public string wind_dir { get; set; }
+        public double pressure_mb { get; set; }
+        public double pressure_in { get; set; }
+        public double precip_mm { get; set; }
+        public double precip_in { get; set; }
+        public int humidity { get; set; }
+        public int cloud { get; set; }
+        public double feelslike_c { get; set; }
+        public double feelslike_f { get; set; }
+        public double vis_km { get; set; }
+        public double vis_miles { get; set; }
+        public double uv { get; set; }
+        public double gust_mph { get; set; }
+        public double gust_kph { get; set; }
+    }
 
-        public struct WeatherApiCurrent
-        {
-            public int? last_updated_epoch;
-            public DateTime last_updated;
-            public double? temp_c;
-            public double? temp_f;
-            public bool? is_day;
-            public WeatherApiCurrentCondition condition;
-            public double wind_mph;
-            public double wind_kph;
-            public int wind_degree;
-            public string? wind_dir;
-            public double? pressure_mb;
-            public double? pressure_in;
-            public double? precip_mm;
-            public double? precip_in;
-            public int? humidity;
-            public int? cloud;
-            public double? feelslike_c;
-            public double? feelslike_f;
-            public double? vis_km;
-            public double? vis_miles;
-            public double? uv;
-            public double? gust_mph;
-            public double? gust_kph;
-        }
+    public class Location
+    {
+        public string name { get; set; }
+        public string region { get; set; }
+        public string country { get; set; }
+        public double lat { get; set; }
+        public double lon { get; set; }
+        public string tz_id { get; set; }
+        public int localtime_epoch { get; set; }
+        public string localtime { get; set; }
+    }
 
-        public WeatherApiCurrentDTO()
-        {
-            location = new WeatherApiLocation();
-            current = new WeatherApiCurrent();
-        }
-
-        public WeatherApiLocation location;
-        public WeatherApiCurrent current;
+    public class WeatherApiCurrentDto
+    {
+        public Location location { get; set; }
+        public Current current { get; set; }
     }
 }

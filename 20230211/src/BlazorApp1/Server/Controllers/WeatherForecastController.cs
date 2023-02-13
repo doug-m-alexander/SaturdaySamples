@@ -1,48 +1,38 @@
 using BlazorApp1.Shared;
-using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Cryptography.Xml;
-using System.Text.Json;
-using static System.Net.WebRequestMethods;
+using System.Net.Http.Json;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace BlazorApp1.Server.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
+    public class WeatherApiCurrentController : ControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
 
-        private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ILogger<WeatherApiCurrentController> _logger;
+        private readonly IConfiguration _config;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherApiCurrentController(ILogger<WeatherApiCurrentController> logger, IConfiguration config)
         {
             _logger = logger;
+            _config = config;
         }
-
-        //[HttpGet]
-        //public IEnumerable<WeatherForecast> Get()
-        //{
-        //    return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        //    {
-        //        Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-        //        TemperatureC = Random.Shared.Next(-20, 55),
-        //        Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        //    })
-        //    .ToArray();
-        //}
-
-        [HttpGet]
-        public IEnumerator<WeatherApiCurrentDTO> Get()
+        [HttpGet("current")]
+        public async Task<WeatherApiCurrentDto> Get(HttpClient client)
         {
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+            var endpoint2 = new StringBuilder();
+            endpoint2.Append(_config["WeatherApiUrl"]);
+            endpoint2.Append('/');
+            endpoint2.Append(_config["WeatherApiVersion"]);
+            endpoint2.Append('/');
+            endpoint2.Append(_config["CurrentApiPath"]);
+            var qs = Request.QueryString;
             // TODO: Replace with config values
             string WeatherApiUrl = "http://api.weatherapi.com";
             string WeatherApiVersion = "v1";
@@ -50,15 +40,7 @@ namespace BlazorApp1.Server.Controllers
             string location = "92328";
 
             string endpoint = $"{WeatherApiUrl}/{WeatherApiVersion}/current.json?key={apiKey}&q={location}&aqi=no";
-            var response = client.GetAsync(endpoint).Result;
-            WeatherApiCurrentDTO? deserializedObject;
-            if (response.IsSuccessStatusCode)
-            {
-                var dataObject = response.Content.ReadAsStringAsync().Result;
-                deserializedObject = (WeatherApiCurrentDTO)JsonConvert.DeserializeObject(dataObject, typeof(WeatherApiCurrentDTO));
-            }
-
-            return null;
+            return await client.GetFromJsonAsync<WeatherApiCurrentDto>(endpoint);
         }
     }
 }
