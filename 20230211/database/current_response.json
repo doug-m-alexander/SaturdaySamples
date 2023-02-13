@@ -1,0 +1,41 @@
+{
+    "location": {
+        "name": "Seaside",
+        "region": "California",
+        "country": "USA",
+        "lat": 36.61,
+        "lon": -121.84,
+        "tz_id": "America/Los_Angeles",
+        "localtime_epoch": 1676141730,
+        "localtime": "2023-02-11 10:55"
+    },
+    "current": {
+        "last_updated_epoch": 1676141100,
+        "last_updated": "2023-02-11 10:45",
+        "temp_c": 8.3,
+        "temp_f": 46.9,
+        "is_day": 1,
+        "condition": {
+            "text": "Overcast",
+            "icon": "//cdn.weatherapi.com/weather/64x64/day/122.png",
+            "code": 1009
+        },
+        "wind_mph": 6.9,
+        "wind_kph": 11.2,
+        "wind_degree": 120,
+        "wind_dir": "ESE",
+        "pressure_mb": 1014.0,
+        "pressure_in": 29.94,
+        "precip_mm": 0.0,
+        "precip_in": 0.0,
+        "humidity": 90,
+        "cloud": 100,
+        "feelslike_c": 7.9,
+        "feelslike_f": 46.3,
+        "vis_km": 16.0,
+        "vis_miles": 9.0,
+        "uv": 2.0,
+        "gust_mph": 4.5,
+        "gust_kph": 7.2
+    }
+}

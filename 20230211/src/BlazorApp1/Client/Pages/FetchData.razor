@@ -1,0 +1,60 @@
+﻿@page "/fetchdata"
+@using BlazorApp1.Shared
+@using System.Text;
+@using Microsoft.AspNetCore.Http;
+@inject HttpClient Http
+
+<PageTitle>Weather forecast</PageTitle>
+
+<h1>Weather forecast</h1>
+
+<p>This component demonstrates fetching data from the server.</p>
+
+<EditForm Model="@apiQuery" OnSubmit="@HandleSubmit">
+    <InputText id="location" @bind-Value="apiQuery.location" />
+    <InputCheckbox id="aqi" @bind-Value="apiQuery.aqi" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+
+
+@*@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}*@
+
+@code {
+    private CurrentApiQuery apiQuery = new();
+    private WeatherApiCurrentDto currentDto;
+    private async void HandleSubmit()
+    {
+        var endpoint = $"WeatherForecast/current?q={apiQuery.location}&aqi={(apiQuery.aqi ? "yes" : "no")}";
+        var response = await Http.GetFromJsonAsync<WeatherApiCurrentDto>(endpoint);
+        currentDto = response;
+    }
+}
