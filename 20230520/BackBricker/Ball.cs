@@ -9,19 +9,20 @@ public class Ball
   public float Radius { get; set; }
   public Color Color { get; set; }
   public Sound BounceSound { get; }
+  public float Speed { get; }
 
   private static Random random = new Random();
   private Vector2 initialPosition;
 
-  public Ball(Vector2 position, float radius, Color color, Sound bounceSound)
+  public Ball(Vector2 position, float radius, Color color, Sound bounceSound, float speed)
   {
     Position = position;
     initialPosition = position;
     Radius = radius;
     Color = color;
     BounceSound = bounceSound;
+    Speed = speed;
     float angle = (float)(Math.PI / 4); // 45-degree arc
-    float speed = 2000; // Adjust the speed as needed
 
     float randomAngle = (float)((angle * 0.5) - (angle * random.NextDouble()));
     Vector2 direction = new Vector2((float)Math.Sin(randomAngle), (float)Math.Cos(randomAngle));
@@ -55,10 +56,9 @@ public class Ball
   {
     Position = initialPosition;
     float angle = (float)(Math.PI / 4); // 45-degree arc
-    float speed = 2000; // Adjust the speed as needed
 
     float randomAngle = (float)((angle * 0.5) - (angle * random.NextDouble()));
     Vector2 direction = new Vector2((float)Math.Sin(randomAngle), (float)Math.Cos(randomAngle));
-    Velocity = direction * speed;
+    Velocity = direction * Speed;
   }
 }

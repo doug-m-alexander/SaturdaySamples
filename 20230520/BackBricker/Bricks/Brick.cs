@@ -15,7 +15,7 @@ namespace BackBricker.Bricks
     public Color Color { get; }
     public Sound DeathSound { get; }
 
-    private const int BorderThickness = 2;
+    private const int BorderThickness = 5;
 
     public Brick(Rectangle bounds, Color color, Sound deathSound)
     {

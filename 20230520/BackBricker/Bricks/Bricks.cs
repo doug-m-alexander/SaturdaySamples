@@ -14,6 +14,40 @@ class Bricks
   private readonly Sound deathSound;
   private Brick[,] bricks;
 
+  private Random random = new Random();
+
+  Color[] vibrantColors = new Color[]
+{
+    new Color(255, 0, 0, 255),           // Red
+    new Color(255, 165, 0, 255),         // Orange
+    new Color(255, 255, 0, 255),         // Yellow
+    new Color(0, 255, 0, 255),           // Lime
+    new Color(0, 255, 255, 255),         // Cyan
+    new Color(255, 0, 255, 255),         // Magenta
+    new Color(255, 105, 180, 255),       // Pink
+    new Color(128, 0, 128, 255),         // Purple
+    new Color(255, 20, 147, 255),        // Deep Pink
+    new Color(127, 255, 0, 255),         // Chartreuse
+    new Color(0, 255, 127, 255),         // Spring Green
+    new Color(0, 255, 255, 255),         // Aqua
+    new Color(0, 191, 255, 255),         // Deep Sky Blue
+    new Color(138, 43, 226, 255),        // Blue Violet
+    new Color(255, 0, 255, 255),         // Magenta
+    new Color(205, 92, 92, 255),         // Indian Red
+    new Color(255, 215, 0, 255),         // Gold
+    new Color(124, 252, 0, 255),         // Lawn Green
+    new Color(100, 149, 237, 255),       // Cornflower Blue
+    new Color(147, 112, 219, 255),       // Medium Purple
+    new Color(32, 178, 170, 255),        // Light Sea Green
+    new Color(186, 85, 211, 255),        // Medium Orchid
+    new Color(255, 69, 0, 255),          // Orange Red
+    new Color(199, 21, 133, 255),        // Medium Violet Red
+    new Color(244, 164, 96, 255)         // Sandy Brown
+};
+
+
+
+
   public Bricks(int rowCount, int columnCount, int brickWidth, int brickHeight, int brickPadding, int brickOffsetTop, int brickOffsetLeft, Ball ball, Sound deathSound)
   {
     this.rowCount = rowCount;
@@ -41,7 +75,7 @@ class Bricks
 
         int brickX = col * (brickWidth + brickPadding) + brickOffsetLeft;
         int brickY = row * (brickHeight + brickPadding) + brickOffsetTop;
-        bricks[row, col] = new Brick(new Rectangle(brickX, brickY, brickWidth, brickHeight), Raylib.ColorFromHSV(hue, saturation, value), deathSound: deathSound); // 1 indicates that the brick is not destroyed
+        bricks[row, col] = new Brick(new Rectangle(brickX, brickY, brickWidth, brickHeight), vibrantColors[random.Next(25)], deathSound: deathSound); // 1 indicates that the brick is not destroyed
       }
     }
 
