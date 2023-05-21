@@ -21,7 +21,7 @@ public class Ball
     Color = color;
     BounceSound = bounceSound;
     float angle = (float)(Math.PI / 4); // 45-degree arc
-    float speed = 400; // Adjust the speed as needed
+    float speed = 2000; // Adjust the speed as needed
 
     float randomAngle = (float)((angle * 0.5) - (angle * random.NextDouble()));
     Vector2 direction = new Vector2((float)Math.Sin(randomAngle), (float)Math.Cos(randomAngle));
@@ -55,7 +55,7 @@ public class Ball
   {
     Position = initialPosition;
     float angle = (float)(Math.PI / 4); // 45-degree arc
-    float speed = 400; // Adjust the speed as needed
+    float speed = 2000; // Adjust the speed as needed
 
     float randomAngle = (float)((angle * 0.5) - (angle * random.NextDouble()));
     Vector2 direction = new Vector2((float)Math.Sin(randomAngle), (float)Math.Cos(randomAngle));

@@ -22,31 +22,42 @@ class Program
     Raylib.SetSoundVolume(brickExplosionSound, 0.5f);
 
     Window window = new Window(1920, 1080, "Brick Breaker");
-    Ball ball = new Ball(new Vector2(window.ScreenWidth / 2, window.ScreenHeight / 2), 10, Color.VIOLET, bounceSound);
-    Bricks bricks = new Bricks(rowCount: 5, columnCount: 20, brickWidth: 70, brickHeight: 30, brickPadding: 15, brickOffsetTop: 50, brickOffsetLeft: 50, ball: ball, deathSound: brickExplosionSound);
-    Paddle paddle = new Paddle(window.ScreenWidth / 2 - 100 / 2, window.ScreenHeight - 20 - 10, 250, 20, 400);
+    Ball ball = new Ball(position: new Vector2(window.ScreenWidth / 2, window.ScreenHeight / 2), radius: 50, color: Color.VIOLET, bounceSound: bounceSound);
+    Bricks bricks = new Bricks(rowCount: 1, columnCount: 5, brickWidth: 70, brickHeight: 30, brickPadding: 15, brickOffsetTop: 50, brickOffsetLeft: 50, ball: ball, deathSound: brickExplosionSound);
+    Paddle paddle = new Paddle(x: window.ScreenWidth / 2 - 100 / 2, y: window.ScreenHeight - 20 - 10, width: 1920, height: 20, speed: 1600);
 
     Raylib.InitWindow(window.ScreenWidth, window.ScreenHeight, window.Title);
     Raylib.SetTargetFPS(300);
 
     bool isPlaying = false;
     bool isGameOver = false;
+    bool hasWon = false;
     int lives = 3;
 
-    
+    // Create fireworks particles
+    ParticleSystem fireworks = new ParticleSystem()
+    {
+      MaxParticles = 2000,
+      BurstParticles = 500,
+      ParticleRadius = 2,
+      ParticleSpeed = 100,
+      ParticleGravity = new Vector2(0, 200),
+      ParticleColor = Color.ORANGE,
+      ParticleLifetime = 2.0f,
+      ParticleFadeoutTime = 1.8f
+    };
 
     // Load background music
     Music bgMusic = Raylib.LoadMusicStream("audio/game-music-loop-3-144252.ogg");
     //Raylib.PlayMusicStream(bgMusic);
 
-
     while (!Raylib.WindowShouldClose())
     {
+      float deltaTime = Raylib.GetFrameTime();
       if (isPlaying)
       {
-
         Raylib.UpdateMusicStream(bgMusic);
-        float deltaTime = Raylib.GetFrameTime();
+        
 
         paddle.Update(deltaTime);
         ball.Update(deltaTime);
@@ -61,7 +72,7 @@ class Program
         if (bricks.AllBricksDestroyed())
         {
           isPlaying = false;
-          isGameOver = true;
+          hasWon = true;
         }
 
         if (ball.Position.Y - ball.Radius > Raylib.GetScreenHeight())
@@ -91,6 +102,7 @@ class Program
             bricks.Reset(ball);
             lives = 3;
             isGameOver = false;
+            hasWon = false;
           }
         }
         else
@@ -98,6 +110,7 @@ class Program
           if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
           {
             isPlaying = true;
+            hasWon = false;
           }
         }
       }
@@ -127,6 +140,22 @@ class Program
           int restartTextX = window.ScreenWidth / 2 - restartTextWidth / 2;
           int restartTextY = gameOverTextY + 60 + 20;
           Raylib.DrawText(restartText, restartTextX, restartTextY, 30, Color.BLACK);
+        }
+        else if (hasWon)
+        {
+          string congratulationsText = "Congratulations! You Won!";
+          int congratulationsTextWidth = Raylib.MeasureText(congratulationsText, 60);
+          int congratulationsTextX = window.ScreenWidth / 2 - congratulationsTextWidth / 2;
+          int congratulationsTextY = window.ScreenHeight / 2 - 60 / 2;
+          Raylib.DrawText(congratulationsText, congratulationsTextX, congratulationsTextY, 60, Color.GREEN);
+
+          
+
+          fireworks.Emit(congratulationsTextX + 250, congratulationsTextY + 250); // Emit fireworks particles at the specified position
+          fireworks.Update(deltaTime); // Update fireworks particles
+
+          // Draw fireworks particles
+          fireworks.Draw();
         }
         else
         {
