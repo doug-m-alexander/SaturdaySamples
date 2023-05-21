@@ -76,7 +76,6 @@ class Program
           {
             paddle.Reset();
             ball.Reset();
-            bricks.Reset(ball);
           }
         }
       }
