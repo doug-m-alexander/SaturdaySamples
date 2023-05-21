@@ -10,6 +10,8 @@ class Paddle
   public int Height { get; set; }
   public float Speed { get; set; }
 
+  private Vector2 initialPosition;
+
   public Paddle(float x, float y, int width, int height, float speed)
   {
     Position = new Vector2(x, y);
@@ -17,6 +19,8 @@ class Paddle
     Height = height;
     Speed = speed;
     Bounds = new Rectangle(x, y, width, height);
+
+    initialPosition = Position;
   }
 
   public void Update(float deltaTime)
@@ -35,6 +39,11 @@ class Paddle
     Position = newPosition;
 
     Bounds = new Rectangle(Position.X, Position.Y, Width, Height);
+  }
+
+  public void Reset()
+  {
+    Position = initialPosition;
   }
 
   public void Draw()

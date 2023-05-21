@@ -1,4 +1,5 @@
 ﻿using Raylib_cs;
+using System;
 using System.Numerics;
 
 public class Ball
@@ -8,38 +9,49 @@ public class Ball
   public float Radius { get; set; }
   public Color Color { get; set; }
 
-  public Ball(Vector2 position, Vector2 velocity, float radius, Color color)
+  private static Random random = new Random();
+  private Vector2 initialPosition;
+
+  public Ball(Vector2 position, float radius, Color color)
   {
     Position = position;
-    Velocity = velocity;
+    initialPosition = position;
     Radius = radius;
     Color = color;
+
+    float angle = (float)(Math.PI / 4); // 45-degree arc
+    float speed = 400; // Adjust the speed as needed
+
+    float randomAngle = (float)((angle * 0.5) - (angle * random.NextDouble()));
+    Vector2 direction = new Vector2((float)Math.Sin(randomAngle), (float)Math.Cos(randomAngle));
+    Velocity = direction * speed;
   }
 
   public void Update(float deltaTime)
   {
     Position += Velocity * deltaTime;
 
-    if (Position.Y - Radius > Raylib.GetScreenHeight())
-    {
-      // Ball went out of the bottom of the screen, reset its position
-      Position = new Vector2(Raylib.GetScreenWidth() / 2, Raylib.GetScreenHeight() / 2);
-    }
-    else
-    {
-      if (Position.X - Radius < 0 || Position.X + Radius > Raylib.GetScreenWidth())
-        Velocity = new Vector2(-Velocity.X, Velocity.Y);
+    // Handle screen boundaries
+    if (Position.X - Radius < 0 || Position.X + Radius > Raylib.GetScreenWidth())
+      Velocity = new Vector2(-Velocity.X, Velocity.Y);
 
-      if (Position.Y - Radius < 0 )//|| Position.Y + Radius > Raylib.GetScreenHeight())
-        Velocity = new Vector2(Velocity.X, -Velocity.Y);
-    }
+    if (Position.Y - Radius < 0)
+      Velocity = new Vector2(Velocity.X, -Velocity.Y);
   }
-
-
-
 
   public void Draw()
   {
     Raylib.DrawCircleV(Position, Radius, Color);
+  }
+
+  public void Reset()
+  {
+    Position = initialPosition;
+    float angle = (float)(Math.PI / 4); // 45-degree arc
+    float speed = 400; // Adjust the speed as needed
+
+    float randomAngle = (float)((angle * 0.5) - (angle * random.NextDouble()));
+    Vector2 direction = new Vector2((float)Math.Sin(randomAngle), (float)Math.Cos(randomAngle));
+    Velocity = direction * speed;
   }
 }

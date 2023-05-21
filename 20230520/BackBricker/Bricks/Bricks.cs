@@ -62,4 +62,25 @@ class Bricks
       }
     }
   }
+
+  public bool AllBricksDestroyed()
+  {
+    for (int row = 0; row < rowCount; row++)
+    {
+      for (int col = 0; col < columnCount; col++)
+      {
+        if (bricks[row, col] != null && bricks[row, col].IsVisible)
+        {
+          return false; // At least one brick is still visible
+        }
+      }
+    }
+
+    return true; // All bricks are destroyed
+  }
+
+  public void Reset(Ball ball)
+  {
+    InitializeBricks(ball);
+  }
 }
