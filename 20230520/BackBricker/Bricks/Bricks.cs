@@ -11,9 +11,10 @@ class Bricks
   private int brickPadding;
   private int brickOffsetTop;
   private int brickOffsetLeft;
+  private readonly Sound deathSound;
   private Brick[,] bricks;
 
-  public Bricks(int rowCount, int columnCount, int brickWidth, int brickHeight, int brickPadding, int brickOffsetTop, int brickOffsetLeft, Ball ball)
+  public Bricks(int rowCount, int columnCount, int brickWidth, int brickHeight, int brickPadding, int brickOffsetTop, int brickOffsetLeft, Ball ball, Sound deathSound)
   {
     this.rowCount = rowCount;
     this.columnCount = columnCount;
@@ -22,7 +23,7 @@ class Bricks
     this.brickPadding = brickPadding;
     this.brickOffsetTop = brickOffsetTop;
     this.brickOffsetLeft = brickOffsetLeft;
-
+    this.deathSound = deathSound;
     bricks = new Brick[rowCount, columnCount];
     InitializeBricks(ball);
   }
@@ -40,7 +41,7 @@ class Bricks
 
         int brickX = col * (brickWidth + brickPadding) + brickOffsetLeft;
         int brickY = row * (brickHeight + brickPadding) + brickOffsetTop;
-        bricks[row, col] = new Brick(new Rectangle(brickX, brickY, brickWidth, brickHeight), Raylib.ColorFromHSV(hue, saturation, value)); // 1 indicates that the brick is not destroyed
+        bricks[row, col] = new Brick(new Rectangle(brickX, brickY, brickWidth, brickHeight), Raylib.ColorFromHSV(hue, saturation, value), deathSound: deathSound); // 1 indicates that the brick is not destroyed
       }
     }
 

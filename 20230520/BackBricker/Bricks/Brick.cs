@@ -13,12 +13,15 @@ namespace BackBricker.Bricks
     public bool IsVisible { get; set; }
     public Rectangle Bounds { get; }
     public Color Color { get; }
+    public Sound DeathSound { get; }
+
     private const int BorderThickness = 2;
 
-    public Brick(Rectangle bounds, Color color)
+    public Brick(Rectangle bounds, Color color, Sound deathSound)
     {
       Bounds = bounds;
       Color = color;
+      DeathSound = deathSound;
       IsVisible = true;
     }
 
@@ -36,6 +39,7 @@ namespace BackBricker.Bricks
       if (IsVisible && Raylib.CheckCollisionCircleRec(ball.Position, ball.Radius, Bounds))
       {
         IsVisible = false;
+        Raylib.PlaySound(DeathSound);
 
         // Ball is within the bounds of the brick
         Vector2 ballDirection = ball.Velocity;

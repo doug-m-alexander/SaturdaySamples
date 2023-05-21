@@ -1,13 +1,29 @@
 ﻿using Raylib_cs;
 using System.Numerics;
+using System.Threading.Tasks;
 
 class Program
 {
   static void Main()
   {
+    Raylib.IsAudioDeviceReady();
+    Raylib.InitAudioDevice();
+    while (!Raylib.IsAudioDeviceReady())
+    {
+      Task.Delay(100);
+    }
+
+    // Load sound effects
+    Sound bounceSound = Raylib.LoadSound("audio/percussive-hit-02_02-105799.ogg");
+    Raylib.SetSoundVolume(bounceSound, 0.5f);
+    Sound hitPaddleSound = Raylib.LoadSound("audio/soccer-ball-kick-37625.ogg");
+    Raylib.SetSoundVolume(hitPaddleSound, 0.5f);
+    Sound brickExplosionSound = Raylib.LoadSound("audio/pop2-84862.ogg");
+    Raylib.SetSoundVolume(brickExplosionSound, 0.5f);
+
     Window window = new Window(1920, 1080, "Brick Breaker");
-    Ball ball = new Ball(new Vector2(window.ScreenWidth / 2, window.ScreenHeight / 2), 10, Color.VIOLET);
-    Bricks bricks = new Bricks(rowCount: 5, columnCount: 20, brickWidth: 70, brickHeight: 30, brickPadding: 15, brickOffsetTop: 50, brickOffsetLeft: 50, ball: ball);
+    Ball ball = new Ball(new Vector2(window.ScreenWidth / 2, window.ScreenHeight / 2), 10, Color.VIOLET, bounceSound);
+    Bricks bricks = new Bricks(rowCount: 5, columnCount: 20, brickWidth: 70, brickHeight: 30, brickPadding: 15, brickOffsetTop: 50, brickOffsetLeft: 50, ball: ball, deathSound: brickExplosionSound);
     Paddle paddle = new Paddle(window.ScreenWidth / 2 - 100 / 2, window.ScreenHeight - 20 - 10, 250, 20, 400);
 
     Raylib.InitWindow(window.ScreenWidth, window.ScreenHeight, window.Title);
@@ -17,10 +33,19 @@ class Program
     bool isGameOver = false;
     int lives = 3;
 
+    
+
+    // Load background music
+    Music bgMusic = Raylib.LoadMusicStream("audio/game-music-loop-3-144252.ogg");
+    //Raylib.PlayMusicStream(bgMusic);
+
+
     while (!Raylib.WindowShouldClose())
     {
       if (isPlaying)
       {
+
+        Raylib.UpdateMusicStream(bgMusic);
         float deltaTime = Raylib.GetFrameTime();
 
         paddle.Update(deltaTime);
@@ -30,6 +55,7 @@ class Program
         {
           // Ball and paddle collision handling
           ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
+          Raylib.PlaySound(bounceSound);
         }
 
         if (bricks.AllBricksDestroyed())
@@ -60,6 +86,7 @@ class Program
         {
           if (Raylib.IsKeyPressed(KeyboardKey.KEY_ENTER))
           {
+            Raylib.SeekMusicStream(bgMusic, 0);
             paddle.Reset();
             ball.Reset();
             bricks.Reset(ball);
@@ -116,6 +143,11 @@ class Program
 
       window.EndDrawing();
     }
+
+    // Unload resources
+    Raylib.UnloadMusicStream(bgMusic);
+    Raylib.UnloadSound(bounceSound);
+    //Raylib.UnloadSound(hitPaddleSound);
 
     Raylib.CloseWindow();
   }
