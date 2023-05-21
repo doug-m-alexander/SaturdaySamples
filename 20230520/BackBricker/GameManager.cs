@@ -1,7 +1,5 @@
 ﻿using Raylib_cs;
-using System;
 using System.Numerics;
-using System.Threading.Tasks;
 
 
 
@@ -26,7 +24,7 @@ class GameManager
   {
     window = new Window(1920, 1080, "BackBricker");
     ball = new Ball(position: new Vector2(window.ScreenWidth / 2, window.ScreenHeight / 2), radius: 15, color: Color.VIOLET, bounceSound: bounceSound, speed: 500);
-    bricks = new Bricks(rowCount: 6, columnCount: 10, brickWidth: 157, brickHeight: 50, brickPadding: 10, brickOffsetTop: 45, brickOffsetLeft: 125, ball: ball, deathSound: brickExplosionSound);
+    bricks = new Bricks(ball: ball, brickExplosionSound);
     paddle = new Paddle(x: window.ScreenWidth / 2 - 100 / 2, y: window.ScreenHeight - 20 - 10, width: 200, height: 20, speed: 555);
 
     lives = 3;

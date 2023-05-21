@@ -17,6 +17,9 @@
 				<Content Include="audio\winning\*.*">
 						<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 				</Content>
+				<Content Include="levels\*.*">
+						<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+				</Content>
 		</ItemGroup>
 
 </Project>
