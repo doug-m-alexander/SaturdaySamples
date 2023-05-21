@@ -84,6 +84,7 @@ class Program
         bricks.DrawAndUpdate(ball);
         paddle.Draw();
         ball.Draw();
+        DrawLives(window, lives);
       }
       else
       {
@@ -111,7 +112,6 @@ class Program
         }
       }
 
-      DrawLives(window, lives);
       DrawFPS(window);
 
       window.EndDrawing();
@@ -122,6 +122,9 @@ class Program
 
   static void DrawLives(Window window, int lives)
   {
+    if (lives <= 0)
+      return;
+
     const int ballRadius = 10;
     const int spacing = 5;
     Color lifeColor = new Color(255, 0, 0, 200);
