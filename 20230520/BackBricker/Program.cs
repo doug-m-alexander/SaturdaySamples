@@ -15,6 +15,7 @@ class Program
 
     bool isPlaying = false;
     bool isGameOver = false;
+    int lives = 3;
 
     while (!Raylib.WindowShouldClose())
     {
@@ -39,8 +40,18 @@ class Program
 
         if (ball.Position.Y - ball.Radius > Raylib.GetScreenHeight())
         {
-          isPlaying = false;
-          isGameOver = true;
+          lives--;
+          if (lives <= 0)
+          {
+            isPlaying = false;
+            isGameOver = true;
+          }
+          else
+          {
+            paddle.Reset();
+            ball.Reset();
+            bricks.Reset(ball);
+          }
         }
       }
       else
@@ -52,6 +63,7 @@ class Program
             paddle.Reset();
             ball.Reset();
             bricks.Reset(ball);
+            lives = 3;
             isGameOver = false;
           }
         }
@@ -99,12 +111,28 @@ class Program
         }
       }
 
+      DrawLives(window, lives);
       DrawFPS(window);
 
       window.EndDrawing();
     }
 
     Raylib.CloseWindow();
+  }
+
+  static void DrawLives(Window window, int lives)
+  {
+    const int ballRadius = 10;
+    const int spacing = 5;
+    Color lifeColor = new Color(255, 0, 0, 200);
+
+    for (int i = 0; i < lives; i++)
+    {
+      int x = 20 + (ballRadius * 2 + spacing) * i;
+      int y = 20;
+
+      Raylib.DrawCircle(x, y, ballRadius, lifeColor);
+    }
   }
 
   static void DrawFPS(Window window)
