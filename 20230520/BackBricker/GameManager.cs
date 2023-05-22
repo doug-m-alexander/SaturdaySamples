@@ -1,4 +1,5 @@
 ﻿using Raylib_cs;
+using System;
 using System.Numerics;
 
 
@@ -23,9 +24,9 @@ class GameManager
   public GameManager(Music bgMusic, Sound bounceSound, Sound brickExplosionSound)
   {
     window = new Window(1920, 1080, "BackBricker");
-    ball = new Ball(position: new Vector2(window.ScreenWidth / 2, window.ScreenHeight / 2), radius: 15, color: Color.VIOLET, bounceSound: bounceSound, speed: 500);
+    ball = new Ball(position: new Vector2(window.ScreenWidth / 2, window.ScreenHeight / 2), radius: 22, color: Color.VIOLET, bounceSound: bounceSound, speed: 750);
     bricks = new Bricks(ball: ball, brickExplosionSound);
-    paddle = new Paddle(x: window.ScreenWidth / 2 - 100 / 2, y: window.ScreenHeight - 20 - 10, width: 200, height: 20, speed: 555);
+    paddle = new Paddle(x: window.ScreenWidth / 2 - 100 / 2, y: window.ScreenHeight - 20 - 10, width: 333, height: 20, speed: 1000);
 
     lives = 3;
     gameState = GameState.MainMenu;
@@ -101,7 +102,12 @@ class GameManager
 
     if (Raylib.CheckCollisionCircleRec(ball.Position, ball.Radius, paddle.Bounds))
     {
+            // Adjust the ball's position to prevent sticking inside the paddle
+      float paddleTop = paddle.Bounds.y - ball.Radius;
+      ball.Position = new Vector2(ball.Position.X, paddleTop);
       ball.Velocity = new Vector2(ball.Velocity.X, -ball.Velocity.Y);
+
+      // Play the bounce sound
       Raylib.PlaySound(bounceSound);
     }
 

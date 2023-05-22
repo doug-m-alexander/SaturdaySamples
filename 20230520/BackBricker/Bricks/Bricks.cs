@@ -1,4 +1,5 @@
-﻿using BackBricker.Bricks;
+﻿using BackBricker;
+using BackBricker.Bricks;
 using Raylib_cs;
 using System.Collections.Generic;
 using System.IO;
@@ -10,7 +11,7 @@ class Bricks
 
   public Bricks(Ball ball, Sound brickExplosionSound)
   {
-    bricks = LoadBricksFromJson("levels/brickTileset.json", brickExplosionSound);
+    bricks = LoadBricksFromJson("levels/default.json", brickExplosionSound);
     InitializeBricks(ball);
   }
 
@@ -20,18 +21,21 @@ class Bricks
     string json = File.ReadAllText(filePath);
 
     // Deserialize the JSON data into a list of BrickData objects
-    List<BrickData> brickDataList = JsonSerializer.Deserialize<List<BrickData>>(json, options: new JsonSerializerOptions()
+    BrickTileset brickDataList = JsonSerializer.Deserialize<BrickTileset>(json, options: new JsonSerializerOptions()
     {
       PropertyNameCaseInsensitive = true,
     });
 
     // Create Brick instances from the BrickData objects
     List<Brick> bricks = new List<Brick>();
-    foreach (var brickData in brickDataList)
+    foreach (var brickData in brickDataList.BlockMap)
     {
+      var brickType = brickDataList.BlockTypes[brickData.Type];
+      var rect = new Rectangle(brickData.X, brickData.Y, brickType.Size.Width, brickType.Size.Height);
+      var c = brickType.BrickColors[0];
+      var color = new Color(c.R, c.G, c.B, c.A);
       // Create a Brick instance using the BrickData properties
-      Brick brick = new Brick(new Rectangle(brickData.Bounds.x, brickData.Bounds.y, brickData.Bounds.width, brickData.Bounds.height), 
-        new Color(brickData.Color.r, brickData.Color.g, brickData.Color.b, brickData.Color.a), brickExplosionSound);
+      Brick brick = new Brick(rect, color, brickExplosionSound);
 
       // Add the Brick instance to the list
       bricks.Add(brick);

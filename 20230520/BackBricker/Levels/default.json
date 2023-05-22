@@ -1,0 +1,78 @@
+{
+    "metadata": {
+        "backgroundMusic": "audio/background_music.ogg",
+        "backgroundImage": "images/background.png"
+    },
+    "blockTypes": [
+        {
+            "name": "Normal",
+            "size": {
+                "width": 70,
+                "height": 30
+            },
+            "brickColors": [
+                {
+                    "name": "Red",
+                    "r": 255,
+                    "g": 0,
+                    "b": 0,
+                    "a": 255
+                },
+                {
+                    "name": "Blue",
+                    "r": 0,
+                    "g": 0,
+                    "b": 255,
+                    "a": 255
+                }
+            ],
+            "deathSound": "audio/pop2-84862.ogg"
+        },
+        {
+            "name": "Special",
+            "size": {
+                "width": 100,
+                "height": 30
+            },
+            "brickColors": [
+                {
+                    "name": "Green",
+                    "r": 0,
+                    "g": 255,
+                    "b": 0,
+                    "a": 255
+                },
+                {
+                    "name": "Yellow",
+                    "r": 255,
+                    "g": 255,
+                    "b": 0,
+                    "a": 255
+                }
+            ],
+            "deathSound": "audio/pop1-56262.ogg"
+        }
+    ],
+    "blockMap": [
+        {
+            "x": 125,
+            "y": 45,
+            "type": 0
+        },
+        {
+            "x": 205,
+            "y": 45,
+            "type": 1
+        },
+        {
+            "x": 315,
+            "y": 45,
+            "type": 0
+        },
+        {
+            "x": 395,
+            "y": 45,
+            "type": 1
+        }
+    ]
+}
