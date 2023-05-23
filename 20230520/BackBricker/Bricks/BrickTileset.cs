@@ -40,8 +40,10 @@ namespace BackBricker
 
   public record BlockMapEntry
   {
-    public int X { get; init; }
-    public int Y { get; init; }
-    public int Type { get; init; }
+    public int Rows { get; init; }
+    public int VerticalPadding { get; init; }
+    public int HorizontalPadding { get; init; }
+    public List<int> BlockPattern { get; init; }
   }
+
 }

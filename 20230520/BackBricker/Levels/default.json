@@ -7,8 +7,8 @@
         {
             "name": "Normal",
             "size": {
-                "width": 70,
-                "height": 30
+                "width": 140,
+                "height": 50
             },
             "brickColors": [
                 {
@@ -31,8 +31,8 @@
         {
             "name": "Special",
             "size": {
-                "width": 100,
-                "height": 30
+                "width": 200,
+                "height": 50
             },
             "brickColors": [
                 {
@@ -51,28 +51,93 @@
                 }
             ],
             "deathSound": "audio/pop1-56262.ogg"
+        },
+        {
+            "name": "Square",
+            "size": {
+                "width": 60,
+                "height": 60
+            },
+            "brickColors": [
+                {
+                    "name": "Purple",
+                    "r": 128,
+                    "g": 0,
+                    "b": 128,
+                    "a": 255
+                },
+                {
+                    "name": "Orange",
+                    "r": 255,
+                    "g": 165,
+                    "b": 0,
+                    "a": 255
+                }
+            ],
+            "deathSound": "audio/pop3-12345.ogg"
+        },
+        {
+            "name": "Skinny",
+            "size": {
+                "width": 70,
+                "height": 30
+            },
+            "brickColors": [
+                {
+                    "name": "Pink",
+                    "r": 255,
+                    "g": 192,
+                    "b": 203,
+                    "a": 255
+                },
+                {
+                    "name": "Cyan",
+                    "r": 0,
+                    "g": 255,
+                    "b": 255,
+                    "a": 255
+                }
+            ],
+            "deathSound": "audio/pop4-98765.ogg"
         }
     ],
     "blockMap": [
         {
-            "x": 125,
-            "y": 45,
-            "type": 0
+            "rows": 2,
+            "verticalPadding": 20,
+            "horizontalPadding": 20,
+            "blockPattern": [ 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 ]
         },
         {
-            "x": 205,
-            "y": 45,
-            "type": 1
+            "rows": 1,
+            "verticalPadding": 10,
+            "horizontalPadding": 10,
+            "blockPattern": [ 3, 2, 3, 2, 3, 2, 3, 2, 3, 2 ]
         },
         {
-            "x": 315,
-            "y": 45,
-            "type": 0
+            "rows": 3,
+            "verticalPadding": 15,
+            "horizontalPadding": 15,
+            "blockPattern": [ 1, 3, 2, 0, 1, 3, 2, 0, 1, 3 ]
         },
         {
-            "x": 395,
-            "y": 45,
-            "type": 1
+            "rows": 1,
+            "verticalPadding": 10,
+            "horizontalPadding": 10,
+            "blockPattern": [ 2, 0, 1, 3, 2, 0, 1, 3, 2, 0 ]
+        },
+        {
+            "rows": 2,
+            "verticalPadding": 20,
+            "horizontalPadding": 20,
+            "blockPattern": [ 3, 1, 2, 0, 3, 1, 2, 0, 3, 1 ]
+        },
+        {
+            "rows": 1,
+            "verticalPadding": 10,
+            "horizontalPadding": 10,
+            "blockPattern": [ 0, 2, 1, 3, 0, 2, 1, 3, 0, 2 ]
         }
     ]
+
 }
